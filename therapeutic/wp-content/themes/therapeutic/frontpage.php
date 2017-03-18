@@ -45,7 +45,14 @@ Template Name: HomePage
     <div class="box"> 
       <!-- .post -->
       <div class="post">
-        <h2><a href="<?php echo $link?>"><?php the_title()?></a></h2>
+        <h2><a <?php echo "href=$link" ?>>
+        	<?php 
+			if ( $link == "http://therapeuticaxis.com.au/corporate-health/" ) {
+				echo "Professional Development";
+			} else {
+				the_title();
+			}
+		?></a></h2>
         <img src="<?php echo  $main_image[0]?>" alt="" />
         <?php the_content()?>
         <a href="<?php echo $link?>" class="more-link"><?php echo $web?></a> </div>

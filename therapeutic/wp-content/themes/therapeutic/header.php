@@ -114,7 +114,7 @@ $mainmenuclass="class='current'";
       <li <?php if($currentpage==22) echo $mainmenuclass;?>><a href="<?php echo get_permalink('22');?>"><span>Counselling &amp; Psychotherapy</span></a></li>
       <li <?php if($currentpage==24) echo $mainmenuclass;?>><a href="<?php echo get_permalink('24');?>"><span>Massage</span></a></li>
       <li <?php if($currentpage==26) echo $mainmenuclass;?>><a href="<?php echo get_permalink('26');?>"><span>Natural Therapies</span></a></li>
-      <li <?php if($currentpage==28) echo $mainmenuclass;?>><a href="<?php echo get_permalink('28');?>"><span>Corporate Health</span></a></li>
+      <li <?php if($currentpage==28) echo $mainmenuclass;?>><a href="<?php echo get_permalink('28');?>"><span>Professional Development</span></a></li>
       <li <?php if($currentpage==30) echo $mainmenuclass;?>><a href="<?php echo get_permalink('30');?>"><span>Groups</span></a></li>
       <li class="last" <?php if($currentpage==32) echo $mainmenuclass;?> ><a href="<?php echo get_permalink('32');?>"><span>Online Counselling</span></a></li>
     </ul>

@@ -1,0 +1,97 @@
+#!/usr/local/bin/perl -w
+use strict;
+
+# $SMEId: confluence/contrib/phpmyadmin/install,v 1.6 2006/10/04 20:15:31 mbelnap Exp $
+# This file should be referenced (hard links) by three names:
+# phpma_on, phpma_off, and phpma_query.  Based on the name it is
+# invoked with, its behaviour will be different.
+# phpma_on: will set up everything necessary for phpMyAdmin to work for
+#          an individual user.  It will not overwrite existing partial 
+#          installations.  If it detects problems it will fail with a non-zero
+#          return code and an error message.  If it succeeds, it will return 
+#          zero.
+# phpma_off: will remove all files and links created by phpma_on.  If there 
+#          are problems, it will exit with a non-zero return code and an 
+#          error message.  If it succeeds, it will return zero.
+# phpma_query: will return a non-zero if it detects even a partial set of files
+#          created by phpma_on.  Otherwise, it will return zero.
+
+
+use VPS::Install qw(:all);
+use VPS::File qw(:all);
+
+
+my $home    = $< ? vps_home() : '';
+my $etc = "$home/etc";
+my $global_conf = "/usr/local/phpMyAdmin/config.sample.inc.php";
+my $local_conf = "$etc/phpma.config.inc.php";
+my $install_dir = "$home/www/htdocs";
+my $install_link = "$install_dir/mysqladmin";
+
+
+sub get_random {
+  my @chars = ('.','/', 0..9, 'A'..'Z', 'a'..'z');
+  my $string = join '', map $chars[rand @chars], 0..40;
+  return $string;
+}
+
+sub phpma_query {
+  vps_chdir( "$home" )
+    or die "Could not chdir to $home: $!\n";
+
+  if (! -e $etc) {  # this should always be present, make it or die.
+     mkdir( $etc, 0755) or die "Could not make $etc : $!\n";
+  }
+  
+  if ( -e $local_conf) {
+     die "$local_conf already exists.  Exiting $0.\n";
+  }
+  
+  if ( -e "$install_link") {
+     die "$install_link already exists.  Exiting $0.\n";
+  }
+}
+
+sub phpma_off {
+  if ( -e $local_conf) {
+    vps_unlink( "$local_conf" )
+      or die "Could not unlink to $local_conf: $!\n";
+  }
+
+  if ( -e "$install_link") {
+    vps_unlink( "$install_link" )
+      or die "Could not unlink to $install_link: $!\n";
+  }
+}
+
+sub phpma_on {
+
+  phpma_query(); 
+
+  my $random_string = get_random();
+  my $SRC;
+  my $DST;
+  open (SRC, "<$global_conf") or die "$global_conf : $!\n"; 
+  open (DST, ">$local_conf") or die "$local_conf : $!\n"; 
+  while (<SRC>) {
+    s/__PUT_SECRET_HERE__/$random_string/;
+    print DST $_ ;
+  }
+  
+  vps_symlink("/usr/local/phpMyAdmin", "$install_link");
+  # omit the next line to foil random url guessing schemes.
+  #vps_symlink("$install_link", "$install_dir/phpMyAdmin");
+}
+
+
+if( $0 =~ /phpma_off$/ ) {
+  phpma_off();
+}
+elsif( $0 =~ /phpma_on$/ ) {
+  phpma_on();
+}
+elsif( $0 =~ /phpma_query$/ ) {
+  phpma_query();
+}
+
+

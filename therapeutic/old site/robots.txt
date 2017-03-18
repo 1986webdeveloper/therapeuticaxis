@@ -1,0 +1,27 @@
+User-agent: *
+Disallow: /_oldcontact/
+Disallow: /images/
+Disallow: /img/
+Disallow: /inc/
+Disallow: /newcontact/
+Disallow: /removed_pages/
+
+User-agent: msnbot
+Crawl-delay: 10
+
+User-agent: Teoma
+Crawl-delay: 10
+
+User-agent: Slurp
+Crawl-delay: 10
+
+User-agent: aipbot
+Disallow: /
+
+User-agent: BecomeBot
+Disallow: /
+
+User-agent: psbot
+Disallow: /
+
+Sitemap: http://www.therapeuticaxis.com.au/sitemap.xml

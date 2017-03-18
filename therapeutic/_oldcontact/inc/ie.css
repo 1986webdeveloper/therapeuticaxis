@@ -1,0 +1,7 @@
+body {margin-left: 1px;} /* fixes background issue */
+
+#header ul.nav li {border-left: 1px solid;}
+#header ul.nav li:before {content: "";}
+
+#footer ul.nav0 li {margin: 0;}
+#footer ul.nav0 li:before {content: "";}

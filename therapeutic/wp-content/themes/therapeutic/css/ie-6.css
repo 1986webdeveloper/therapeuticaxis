@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+
+#header{
+	padding:14px 24px 18px 19px;
+}
+
+.mainNav li a, .mainNav li a span, .userAction li a, .userAction li a span{
+	float:left;
+}
+.post{
+	overflow:hidden;
+}
+.box .post{
+	width:265px;
+}
+#footer .logo a{
+	height:31px;
+	overflow:hidden;
+	width:167px;
+}
+
